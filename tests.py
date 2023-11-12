@@ -1,3 +1,5 @@
+import pytest
+
 from main import BooksCollector
 
 # класс TestBooksCollector объединяет набор тестов, которыми мы покрываем наше приложение BooksCollector
@@ -18,7 +20,14 @@ class TestBooksCollector:
 
         # проверяем, что добавилось именно две
         # словарь books_rating, который нам возвращает метод get_books_rating, имеет длину 2
-        assert len(collector.get_books_rating()) == 2
+        assert len(collector.books_genre.keys()) == 2
 
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
+
+    @pytest.mark.parametrize('name', ['', 'эта строка должна состоять более чем из 41 символов'])
+    def test_add_new_book_without_name_and_with_long_name_is_not_added(self, name):
+        collector = BooksCollector()
+        collector.add_new_book(name)
+        assert len(collector.books_genre.keys()) == 0
+
