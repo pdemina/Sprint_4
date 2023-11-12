@@ -31,3 +31,29 @@ class TestBooksCollector:
         collector.add_new_book(name)
         assert len(collector.books_genre.keys()) == 0
 
+    def test_set_book_genre_existing_genre_is_added(self):
+        collector = BooksCollector()
+        name='Гордость и предубеждение'
+        collector.add_new_book(name)
+        collector.set_book_genre(name, 'Фантастика')
+        assert collector.books_genre[name] == 'Фантастика'
+
+    def test_set_book_genre_not_existing_genre_is_not_added(self):
+        collector = BooksCollector()
+        name = 'Гордость и предубеждение'
+        collector.add_new_book(name)
+        collector.set_book_genre(name, 'AФантастика')
+        assert collector.books_genre[name] == ''
+
+    def test_get_book_genre_returns_genre_of_existing_book_with_genre(self):
+        collector = BooksCollector()
+        name = 'Гордость и предубеждение'
+        collector.add_new_book(name)
+        collector.set_book_genre(name, 'Фантастика')
+        assert collector.get_book_genre(name) == 'Фантастика'
+
+    #def test_get_books_with_specific_genre_returns_books_with_selected_genre
+
+
+
+
