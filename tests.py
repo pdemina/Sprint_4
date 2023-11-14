@@ -26,7 +26,7 @@ class TestBooksCollector:
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
 
     @pytest.mark.parametrize('name', ['', 'эта строка должна состоять более чем из 41 символов'])
-    def test_add_new_book_without_name_and_with_long_name_is_not_added(self, name):
+    def test_add_new_book_not_added(self, name):
         collector = BooksCollector()
         collector.add_new_book(name)
         assert len(collector.books_genre.keys()) == 0
@@ -52,7 +52,46 @@ class TestBooksCollector:
         collector.set_book_genre(name, 'Фантастика')
         assert collector.get_book_genre(name) == 'Фантастика'
 
-    #def test_get_books_with_specific_genre_returns_books_with_selected_genre
+    @pytest.mark.parametrize('genre', ['Фантастика', 'Мультфильмы', 'Комедии'])
+    def test_get_books_for_children_returns_allowed_values(self, genre):
+        collector = BooksCollector()
+        name = 'Алиса в стране чудес'
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
+        assert name in collector.get_books_for_children()
+
+    @pytest.mark.parametrize('genre', ['Ужасы', 'Детективы'])
+    def test_get_books_for_children_not_return_forbidden_values(self, genre):
+        collector = BooksCollector()
+        name = 'Гордость и предубеждение'
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
+        assert name not in collector.get_books_for_children()
+
+    def test_add_book_in_favorites_book_added(self):
+        collector = BooksCollector()
+        name = 'Повесть о настоящем человеке'
+        collector.add_new_book(name)
+        collector.add_book_in_favorites(name)
+        assert collector.favorites.__contains__(name)
+
+    def test_get_list_of_favorites_books_books_got(self):
+        collector = BooksCollector()
+        name = 'Повесть о настоящем человеке'
+        collector.add_new_book(name)
+        collector.add_book_in_favorites(name)
+        assert name in collector.get_list_of_favorites_books()
+
+    def test_delete_book_from_favorites_books_deleted(self):
+        collector = BooksCollector()
+        name = 'Повесть о настоящем человеке'
+        collector.add_new_book(name)
+        collector.add_book_in_favorites(name)
+        collector.delete_book_from_favorites(name)
+        assert name not in collector.get_list_of_favorites_books()
+
+
+
 
 
 
