@@ -33,7 +33,7 @@ class TestBooksCollector:
 
     def test_set_book_genre_existing_genre_is_added(self):
         collector = BooksCollector()
-        name='Гордость и предубеждение'
+        name = 'Гордость и предубеждение'
         collector.add_new_book(name)
         collector.set_book_genre(name, 'Фантастика')
         assert collector.books_genre[name] == 'Фантастика'
@@ -89,6 +89,14 @@ class TestBooksCollector:
         collector.add_book_in_favorites(name)
         collector.delete_book_from_favorites(name)
         assert name not in collector.get_list_of_favorites_books()
+
+    @pytest.mark.parametrize('genre', ['Ужасы', 'Детективы','Фантастика', 'Мультфильмы', 'Комедии'])
+    def test_get_books_with_specific_genre_books_got(self, genre):
+        collector = BooksCollector()
+        name = 'Гордость и предубеждение'
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
+        assert len(collector.get_books_with_specific_genre(genre)) == 1
 
 
 
