@@ -20,7 +20,7 @@ class TestBooksCollector:
 
         # проверяем, что добавилось именно две
         # словарь books_rating, который нам возвращает метод get_books_rating, имеет длину 2
-        assert len(collector.books_genre.keys()) == 2
+        assert len(collector.get_books_genre()) == 2
 
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
@@ -29,7 +29,7 @@ class TestBooksCollector:
     def test_add_new_book_not_added(self, name):
         collector = BooksCollector()
         collector.add_new_book(name)
-        assert len(collector.books_genre.keys()) == 0
+        assert len(collector.get_books_genre()) == 0
 
     def test_set_book_genre_existing_genre_is_added(self):
         collector = BooksCollector()
@@ -73,7 +73,7 @@ class TestBooksCollector:
         name = 'Повесть о настоящем человеке'
         collector.add_new_book(name)
         collector.add_book_in_favorites(name)
-        assert collector.favorites.__contains__(name)
+        assert name in collector.get_list_of_favorites_books()
 
     def test_get_list_of_favorites_books_books_got(self):
         collector = BooksCollector()
@@ -90,17 +90,11 @@ class TestBooksCollector:
         collector.delete_book_from_favorites(name)
         assert name not in collector.get_list_of_favorites_books()
 
-    @pytest.mark.parametrize('genre', ['Ужасы', 'Детективы','Фантастика', 'Мультфильмы', 'Комедии'])
+    @pytest.mark.parametrize('genre', ['Ужасы', 'Детективы', 'Фантастика', 'Мультфильмы', 'Комедии'])
     def test_get_books_with_specific_genre_books_got(self, genre):
         collector = BooksCollector()
         name = 'Гордость и предубеждение'
         collector.add_new_book(name)
         collector.set_book_genre(name, genre)
         assert len(collector.get_books_with_specific_genre(genre)) == 1
-
-
-
-
-
-
 
