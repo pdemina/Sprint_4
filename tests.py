@@ -68,13 +68,6 @@ class TestBooksCollector:
         collector.set_book_genre(name, genre)
         assert name not in collector.get_books_for_children()
 
-    def test_add_book_in_favorites_book_added(self):
-        collector = BooksCollector()
-        name = 'Повесть о настоящем человеке'
-        collector.add_new_book(name)
-        collector.add_book_in_favorites(name)
-        assert name in collector.get_list_of_favorites_books()
-
     def test_get_list_of_favorites_books_books_got(self):
         collector = BooksCollector()
         name = 'Повесть о настоящем человеке'
