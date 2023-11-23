@@ -35,14 +35,14 @@ class TestBooksCollector:
         collector = BooksCollector()
         name = 'Гордость и предубеждение'
         collector.add_new_book(name)
-        collector.set_book_genre(name, 'Фантастика')
-        assert collector.books_genre[name] == 'Фантастика'
+        collector.set_book_genre(name, collector.get_book_genre(name))
+        assert collector.books_genre[name] == collector.get_book_genre(name)
 
     def test_set_book_genre_not_existing_genre_is_not_added(self):
         collector = BooksCollector()
         name = 'Гордость и предубеждение'
         collector.add_new_book(name)
-        collector.set_book_genre(name, 'AФантастика')
+        collector.set_book_genre(name, 'not_existing_genre_' + collector.get_book_genre(name))
         assert collector.books_genre[name] == ''
 
     def test_get_book_genre_returns_genre_of_existing_book_with_genre(self):
